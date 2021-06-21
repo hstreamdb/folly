@@ -49,7 +49,7 @@ cdef class AsyncioExecutor:
 # get_executor() should always be run from a running eventloop in a single
 # diff. But ultimately we will want to remove this function and
 # go back to just get_executor() that only binds to a running loop.
-cdef cAsyncioExecutor* get_running_executor(bint running):
+cdef api cAsyncioExecutor* get_running_executor(bint running):
     try:
         if running:
             loop = asyncio.get_running_loop()
@@ -65,5 +65,5 @@ cdef cAsyncioExecutor* get_running_executor(bint running):
         loop_to_q[loop] = Q
     return Q.cQ.get()
 
-cdef cAsyncioExecutor* get_executor():
+cdef api cAsyncioExecutor* get_executor():
     return get_running_executor(False)
